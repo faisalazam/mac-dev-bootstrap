@@ -1,0 +1,25 @@
+[user]
+	name = Muhammad Faisal
+	email = muhammad.faisal@tpgtelecom.com.au
+
+[color]
+	ui = auto
+
+[push]
+	default = current
+
+[core]
+	autocrlf = input
+	excludesfile = ~/.gitignore_global
+
+[init]
+	defaultBranch = main
+
+[diff]
+  algorithm = histogram
+
+[merge]
+  conflictstyle = zdiff3
+
+[url "git@github.com:"]
+	insteadOf = https://github.com/
