@@ -1,0 +1,5 @@
+alias orgs='cd ~/orgs'
+alias tpg='cd ~/orgs/tpg'
+alias dev='cd ~/orgs/tpg/projects'
+
+alias personal='cd ~/orgs/personal'
