@@ -1,0 +1,62 @@
+# -----------------------
+# OS / macOS
+# -----------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+
+# -----------------------
+# IDEs / Editors
+# -----------------------
+.idea/
+.vscode/
+*.imp
+*.swp
+*.swo
+*.tmp
+
+# -----------------------
+# Python
+# -----------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# -----------------------
+# Node
+# -----------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# -----------------------
+# Terraform
+# -----------------------
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# -----------------------
+# Misc
+# -----------------------
+.env
+.env.*
+
+# -----------------------
+# Build outputs
+# -----------------------
+target/
+out/
+build/
+dist/
+
+# Maven / Gradle
+*.class
+*.jar
+*.war
+*.ear

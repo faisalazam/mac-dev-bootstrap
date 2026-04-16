@@ -1,0 +1,12 @@
+# IDEs
+.idea/
+.vscode/
+
+# OS junk
+.DS_Store
+
+# Temporary files
+*.swp
+*.tmp
+
+AGENTS.md
