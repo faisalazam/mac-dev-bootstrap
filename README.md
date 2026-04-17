@@ -72,3 +72,21 @@ jenv global 21
 - If you change SSH key naming or Java versions, update related files together:
     - SSH: `ssh/config` and `bin/github-ssh-setup.sh`
     - Java: `Brewfile` and `setup-mac.sh`
+
+## Terminal Colors (iTerm2)
+
+This setup intentionally does not override shell-level color variables (`LSCOLORS`, `LS_COLORS`). Terminal appearance is
+expected to be managed via the iTerm2 profile.
+
+For best readability with Powerlevel10k and common CLI tools, use a dark color preset in iTerm2:
+
+**iTerm2 → Settings → Profiles → Colors → Color Preset**
+
+Recommended presets:
+
+- Dark Background
+- Smoooooth
+- Solarized Dark
+- Tango Dark
+
+If colors look hard to read after setup, adjusting the iTerm2 color preset is usually sufficient.

@@ -141,3 +141,11 @@ fi
 echo
 echo "Done"
 echo "Restart your terminal to apply Zsh and Powerlevel10k configuration"
+echo
+echo "Tip: For best readability in iTerm2, set a dark color preset:"
+echo "  iTerm2 → Settings → Profiles → Colors → Color Preset"
+echo "  Recommended presets:"
+echo "    - Dark Background"
+echo "    - Smoooooth"
+echo "    - Solarized Dark"
+echo "    - Tango Dark"
