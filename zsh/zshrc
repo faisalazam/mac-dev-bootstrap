@@ -114,3 +114,13 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
+
+# Initialize jenv (Java version manager) - dynamically manages java version
+if command -v jenv >/dev/null 2>&1; then
+  eval "$(jenv init -)"
+
+  # Export JAVA_HOME based on jenv's selected version (for Maven and other tools)
+  JENV_JAVA_HOME="$(jenv prefix 2>/dev/null)"
+  # Update JAVA_HOME only if JENV_JAVA_HOME is not empty
+  [ -n "$JENV_JAVA_HOME" ] && export JAVA_HOME="$JENV_JAVA_HOME"
+fi

@@ -17,6 +17,10 @@ brew update
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES="$SCRIPT_DIR"
 
+# Java versions to manage via jenv (must match Brewfile temurin casks)
+JAVA_DEFAULT=26
+JAVA_VERSIONS=(26 21)
+
 # Install packages from Brewfile
 if [ -f "$DOTFILES/Brewfile" ]; then
   brew bundle --file="$DOTFILES/Brewfile"
@@ -25,6 +29,32 @@ fi
 # Apply dotfiles
 if [ -x "$DOTFILES/bin/bootstrap.sh" ]; then
   "$DOTFILES/bin/bootstrap.sh"
+fi
+
+# Enforce that all configured Temurin versions exist after brew bundle
+for version in "${JAVA_VERSIONS[@]}"; do
+  java_home="/Library/Java/JavaVirtualMachines/temurin-${version}.jdk/Contents/Home"
+  if [ ! -d "$java_home" ]; then
+    echo "Expected Temurin ${version} not found at: $java_home"
+    echo "Brewfile and JAVA_VERSIONS are out of sync, or Homebrew latest temurin is no longer ${JAVA_DEFAULT}."
+    echo "Update JAVA_VERSIONS/JAVA_DEFAULT and Brewfile casks together."
+    exit 1
+  fi
+done
+
+# Export JAVA_HOME explicitly for non-interactive setup script execution
+# (zshrc handles this for interactive shells)
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/temurin-${JAVA_DEFAULT}.jdk/Contents/Home"
+
+# Initialize jenv and register configured Temurin JDKs
+if command -v jenv >/dev/null 2>&1; then
+  # Register each configured Java version with jenv
+  for version in "${JAVA_VERSIONS[@]}"; do
+    jenv add "/Library/Java/JavaVirtualMachines/temurin-${version}.jdk/Contents/Home" 2>/dev/null || true
+  done
+
+  # Set default to the specified version
+  jenv global "$JAVA_DEFAULT"
 fi
 
 # -----------------------------
@@ -56,6 +86,35 @@ packer version
 vault version
 java --version
 mvn --version
+
+# Enforce Java major version alignment for both java and Maven
+EXPECTED_JAVA_MAJOR="${JAVA_DEFAULT%%.*}"
+JAVA_VERSION_LINE="$(java -version 2>&1 | head -1)"
+MVN_VERSION_OUTPUT="$(mvn --version 2>&1 || true)"
+MVN_VERSION_LINE="$(echo "$MVN_VERSION_OUTPUT" | grep 'Java version:' | head -1)"
+
+JAVA_ACTUAL="$(echo "$JAVA_VERSION_LINE" | sed -E 's/.*"([0-9]+)(\.[0-9]+.*)?".*/\1/')"
+MVN_ACTUAL="$(echo "$MVN_VERSION_LINE" | sed -E 's/.*Java version: ([0-9]+)(\.[0-9]+.*)?[, ].*/\1/')"
+
+if [ "$JAVA_ACTUAL" != "$EXPECTED_JAVA_MAJOR" ]; then
+  echo "Java version enforcement failed: expected major $EXPECTED_JAVA_MAJOR, got $JAVA_ACTUAL"
+  echo "Line: $JAVA_VERSION_LINE"
+  exit 1
+fi
+
+if [ -z "$MVN_VERSION_LINE" ]; then
+  echo "Maven version enforcement failed: could not parse 'Java version:' from mvn output"
+  echo "$MVN_VERSION_OUTPUT"
+  exit 1
+fi
+
+if [ "$MVN_ACTUAL" != "$EXPECTED_JAVA_MAJOR" ]; then
+  echo "Maven Java version enforcement failed: expected major $EXPECTED_JAVA_MAJOR, got $MVN_ACTUAL"
+  echo "Line: $MVN_VERSION_LINE"
+  exit 1
+fi
+
+echo "Java version enforcement passed: java=$JAVA_ACTUAL, maven=$MVN_ACTUAL"
 
 echo
 echo "Checking GitHub SSH access"
