@@ -26,11 +26,6 @@ if [ -f "$DOTFILES/Brewfile" ]; then
   brew bundle --file="$DOTFILES/Brewfile"
 fi
 
-# Apply dotfiles
-if [ -x "$DOTFILES/bin/bootstrap.sh" ]; then
-  "$DOTFILES/bin/bootstrap.sh"
-fi
-
 # Enforce that all configured Temurin versions exist after brew bundle
 for version in "${JAVA_VERSIONS[@]}"; do
   java_home="/Library/Java/JavaVirtualMachines/temurin-${version}.jdk/Contents/Home"
@@ -62,6 +57,7 @@ fi
 # -----------------------------
 # Install Oh My Zsh (only if not installed)
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  # KEEP_ZSHRC=yes prevents Oh My Zsh installer from overwriting repo-managed .zshrc
   RUNZSH=no KEEP_ZSHRC=yes sh -c \
     "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
@@ -72,10 +68,9 @@ if [ ! -d "$P10K_DIR" ]; then
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
 fi
 
-# Enable Powerlevel10k in .zshrc (idempotent)
-if ! grep -q 'ZSH_THEME="powerlevel10k/powerlevel10k"' "$HOME/.zshrc" 2>/dev/null; then
-  sed -i '' 's/^ZSH_THEME=.*/ZSH_THEME="powerlevel10k\/powerlevel10k"/' "$HOME/.zshrc" 2>/dev/null \
-    || echo 'ZSH_THEME="powerlevel10k/powerlevel10k"' >> "$HOME/.zshrc"
+# Apply dotfiles
+if [ -x "$DOTFILES/bin/bootstrap.sh" ]; then
+  "$DOTFILES/bin/bootstrap.sh"
 fi
 
 # Sanity checks
@@ -84,8 +79,6 @@ aws --version
 terraform version
 packer version
 vault version
-java --version
-mvn --version
 
 # Enforce Java major version alignment for both java and Maven
 EXPECTED_JAVA_MAJOR="${JAVA_DEFAULT%%.*}"
