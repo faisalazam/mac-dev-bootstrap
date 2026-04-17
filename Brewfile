@@ -46,6 +46,8 @@ cask "docker-desktop"
 # -----------------------
 cask "iterm2"
 cask "font-jetbrains-mono-nerd-font"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
 
 # -----------------------
 # IDEs
