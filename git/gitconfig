@@ -1,6 +1,5 @@
-[user]
-	name = Muhammad Faisal
-	email = muhammad.faisal@tpgtelecom.com.au
+[include]
+    path = ~/.gitconfig.local
 
 [color]
 	ui = auto

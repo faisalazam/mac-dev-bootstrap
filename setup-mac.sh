@@ -114,4 +114,9 @@ else
   echo "ssh not found; skipping GitHub check"
 fi
 
+# Apply dotfiles
+if [ -x "$HOME/orgs/personal/dotfiles/bin/bootstrap.sh" ]; then
+  "$HOME/orgs/personal/dotfiles/bin/bootstrap.sh"
+fi
+
 echo "Done"
