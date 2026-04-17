@@ -15,15 +15,15 @@ fi
 brew update
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DOTFILES="$SCRIPT_DIR"
+REPO_ROOT="$SCRIPT_DIR"
 
 # Java versions to manage via jenv (must match Brewfile temurin casks)
 JAVA_DEFAULT=26
 JAVA_VERSIONS=(26 21)
 
 # Install packages from Brewfile
-if [ -f "$DOTFILES/Brewfile" ]; then
-  brew bundle --file="$DOTFILES/Brewfile"
+if [ -f "$REPO_ROOT/Brewfile" ]; then
+  brew bundle --file="$REPO_ROOT/Brewfile"
 fi
 
 # Enforce that all configured Temurin versions exist after brew bundle
@@ -69,8 +69,8 @@ if [ ! -d "$P10K_DIR" ]; then
 fi
 
 # Apply dotfiles
-if [ -x "$DOTFILES/bin/bootstrap.sh" ]; then
-  "$DOTFILES/bin/bootstrap.sh"
+if [ -x "$REPO_ROOT/bin/bootstrap.sh" ]; then
+  "$REPO_ROOT/bin/bootstrap.sh"
 fi
 
 # Sanity checks

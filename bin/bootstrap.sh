@@ -2,7 +2,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DOTFILES="$(cd "$SCRIPT_DIR/.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 echo "Bootstrapping dotfiles..."
 
@@ -10,8 +10,8 @@ echo "Bootstrapping dotfiles..."
 # Git
 # -----------------------
 echo "Configuring Git"
-ln -sf "$DOTFILES/git/gitconfig" "$HOME/.gitconfig"
-ln -sf "$DOTFILES/git/gitignore_global" "$HOME/.gitignore_global"
+ln -sf "$REPO_ROOT/git/gitconfig" "$HOME/.gitconfig"
+ln -sf "$REPO_ROOT/git/gitignore_global" "$HOME/.gitignore_global"
 
 # -----------------------
 # Git identity (local-only)
@@ -54,9 +54,9 @@ fi
 # -----------------------
 echo
 echo "Configuring Zsh"
-ln -sf "$DOTFILES/zsh/zshrc" "$HOME/.zshrc"
-ln -sf "$DOTFILES/zsh/p10k.zsh" "$HOME/.p10k.zsh"
-ln -sf "$DOTFILES/zsh/zsh_aliases" "$HOME/.zsh_aliases"
+ln -sf "$REPO_ROOT/zsh/zshrc" "$HOME/.zshrc"
+ln -sf "$REPO_ROOT/zsh/p10k.zsh" "$HOME/.p10k.zsh"
+ln -sf "$REPO_ROOT/zsh/zsh_aliases" "$HOME/.zsh_aliases"
 
 # -----------------------
 # SSH (config only)
@@ -64,8 +64,8 @@ ln -sf "$DOTFILES/zsh/zsh_aliases" "$HOME/.zsh_aliases"
 echo
 echo "Configuring SSH"
 mkdir -p "$HOME/.ssh"
-if [ -f "$DOTFILES/ssh/config" ]; then
-  ln -sf "$DOTFILES/ssh/config" "$HOME/.ssh/config"
+if [ -f "$REPO_ROOT/ssh/config" ]; then
+  ln -sf "$REPO_ROOT/ssh/config" "$HOME/.ssh/config"
   chmod 600 "$HOME/.ssh/config"
 fi
 
