@@ -1,0 +1,24 @@
+# -----------------------------------------------------------------------------
+# SSH configuration for GitHub
+#
+# This file exists to explicitly bind GitHub SSH access to a named key:
+#   ~/.ssh/id_ed25519_github
+#
+# This configuration avoids default SSH key names to prevent ambiguity when
+# multiple SSH keys are present (e.g. GitHub, GitLab, work bastions).
+#
+# Private keys are never committed. This file contains no secrets.
+# -----------------------------------------------------------------------------
+
+Host github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_github
+  IdentitiesOnly yes
+
+# Uncomment if SSH over port 22 is blocked (corp networks)
+# Host github.com-443
+#   HostName ssh.github.com
+#   User git
+#   Port 443
+#   IdentityFile ~/.ssh/id_ed25519_github
+#   IdentitiesOnly yes
