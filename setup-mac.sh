@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 #set -e
 
@@ -14,14 +14,17 @@ fi
 
 brew update
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTFILES="$SCRIPT_DIR"
+
 # Install packages from Brewfile
-if [ -f "$HOME/orgs/personal/dotfiles/Brewfile" ]; then
-  brew bundle --file="$HOME/orgs/personal/dotfiles/Brewfile"
+if [ -f "$DOTFILES/Brewfile" ]; then
+  brew bundle --file="$DOTFILES/Brewfile"
 fi
 
 # Apply dotfiles
-if [ -x "$HOME/orgs/personal/dotfiles/bin/bootstrap.sh" ]; then
-  "$HOME/orgs/personal/dotfiles/bin/bootstrap.sh"
+if [ -x "$DOTFILES/bin/bootstrap.sh" ]; then
+  "$DOTFILES/bin/bootstrap.sh"
 fi
 
 # -----------------------------
