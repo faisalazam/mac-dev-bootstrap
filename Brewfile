@@ -49,8 +49,6 @@ cask "docker-desktop"  # Docker engine and desktop UI
 # -----------------------
 cask "iterm2"                        # Terminal emulator
 cask "font-jetbrains-mono-nerd-font" # Font with glyphs for prompts
-brew "zsh-autosuggestions"           # Command autosuggestions
-brew "zsh-syntax-highlighting"       # Command syntax highlighting
 
 # -----------------------
 # IDEs

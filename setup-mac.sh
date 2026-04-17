@@ -62,13 +62,25 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
     "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
+# Install Oh My Zsh plugins
+ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+if [ ! -d "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions" ]; then
+  git clone https://github.com/zsh-users/zsh-autosuggestions \
+    "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions"
+fi
+
+if [ ! -d "$ZSH_CUSTOM_DIR/plugins/zsh-syntax-highlighting" ]; then
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting \
+    "$ZSH_CUSTOM_DIR/plugins/zsh-syntax-highlighting"
+fi
+
 # Install Powerlevel10k theme
-P10K_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+P10K_DIR="$ZSH_CUSTOM_DIR/themes/powerlevel10k"
 if [ ! -d "$P10K_DIR" ]; then
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
 fi
 
-# Apply dotfiles
+# Apply dotfiles (symlinks ~/.zshrc, ~/.p10k.zsh, etc.)
 if [ -x "$REPO_ROOT/bin/bootstrap.sh" ]; then
   "$REPO_ROOT/bin/bootstrap.sh"
 fi
