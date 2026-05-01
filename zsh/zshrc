@@ -121,6 +121,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
+[ -f ~/.zsh_tpg ] && source ~/.zsh_tpg
 
 # Initialize jenv (Java version manager) - dynamically manages java version
 if command -v jenv >/dev/null 2>&1; then
