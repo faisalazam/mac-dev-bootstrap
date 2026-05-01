@@ -18,6 +18,7 @@ It is safe to rerun, and it keeps personal identity and secrets out of git.
 - Installs Oh My Zsh + Powerlevel10k (if missing)
 - Prompts for Git identity and writes it to `~/.gitconfig.local`
 - Configures Java via `jenv` and checks Java/Maven version alignment
+- Optionally runs an organization overlay from `orgs/<org_name>/setup.sh`
 
 ## Full setup (new machine)
 
@@ -28,6 +29,29 @@ cd ~/orgs/personal/mac-dev-bootstrap
 ```
 
 `setup-mac.sh` is the main entry point. It installs dependencies, applies dotfiles, and runs sanity checks.
+
+To include an org-specific overlay (example: TPG):
+
+```bash
+cd ~/orgs/personal/mac-dev-bootstrap
+ORG_BOOTSTRAP=tpg ./setup-mac.sh
+```
+
+This runs `orgs/tpg/setup.sh` after base setup.
+
+If `ORG_BOOTSTRAP` is not set and the script is running in an interactive terminal,
+`setup-mac.sh` shows available overlays under `orgs/` and lets you choose one.
+
+## Organization overlays
+
+Each overlay lives under `orgs/<org_name>/` and can include:
+
+- `setup.sh` for idempotent org setup
+- `Brewfile` for org-specific tools
+- `scripts/` for onboarding tasks (`certs.sh`, `vpn.sh`, etc.)
+- `zsh/tpg.zsh` for org-only shell exports (linked to `~/.zsh_tpg`)
+
+This keeps the base setup generic while allowing per-company extensions.
 
 ## Reapply dotfiles only
 

@@ -16,6 +16,7 @@ brew update
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$SCRIPT_DIR"
+ORG_BOOTSTRAP="${ORG_BOOTSTRAP:-}"
 
 # Java versions to manage via jenv (must match Brewfile temurin casks)
 JAVA_DEFAULT=26
@@ -83,6 +84,49 @@ fi
 # Apply dotfiles (symlinks ~/.zshrc, ~/.p10k.zsh, etc.)
 if [ -x "$REPO_ROOT/bin/bootstrap.sh" ]; then
   "$REPO_ROOT/bin/bootstrap.sh"
+fi
+
+# Prompt for org overlay in interactive terminals when ORG_BOOTSTRAP is not preset
+if [ -z "$ORG_BOOTSTRAP" ] && [ -t 0 ] && [ -t 1 ]; then
+  ORG_CANDIDATES=()
+  for org_dir in "$REPO_ROOT"/orgs/*; do
+    [ -d "$org_dir" ] || continue
+    [ -f "$org_dir/setup.sh" ] || continue
+    ORG_CANDIDATES+=("$(basename "$org_dir")")
+  done
+
+  if [ "${#ORG_CANDIDATES[@]}" -gt 0 ]; then
+    echo
+    echo "Available organization overlays:"
+    i=1
+    for org in "${ORG_CANDIDATES[@]}"; do
+      echo "  [$i] $org"
+      i=$((i + 1))
+    done
+    echo "  [0] Skip organization bootstrap"
+
+    read -rp "Select an organization [0-${#ORG_CANDIDATES[@]}]: " ORG_SELECTION
+    if [[ "$ORG_SELECTION" =~ ^[0-9]+$ ]]; then
+      if [ "$ORG_SELECTION" -gt 0 ] && [ "$ORG_SELECTION" -le "${#ORG_CANDIDATES[@]}" ]; then
+        ORG_BOOTSTRAP="${ORG_CANDIDATES[$((ORG_SELECTION - 1))]}"
+      fi
+    else
+      echo "Invalid selection; skipping organization bootstrap"
+    fi
+  fi
+fi
+
+# Optional organization bootstrap (example: ORG_BOOTSTRAP=tpg ./setup-mac.sh)
+if [ -n "$ORG_BOOTSTRAP" ]; then
+  ORG_SETUP_SCRIPT="$REPO_ROOT/orgs/$ORG_BOOTSTRAP/setup.sh"
+  echo
+
+  if [ -x "$ORG_SETUP_SCRIPT" ]; then
+    "$ORG_SETUP_SCRIPT"
+  else
+    echo "Organization bootstrap script not found or not executable: $ORG_SETUP_SCRIPT"
+    exit 1
+  fi
 fi
 
 # Sanity checks
