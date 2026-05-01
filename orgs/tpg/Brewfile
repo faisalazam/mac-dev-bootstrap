@@ -1,0 +1,4 @@
+# Optional TPG-specific brew dependencies.
+# Add entries here as needed, for example:
+# brew "kubelogin"
+# cask "microsoft-teams"
