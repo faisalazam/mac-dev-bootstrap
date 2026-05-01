@@ -121,7 +121,14 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
-[ -f ~/.zsh_tpg ] && source ~/.zsh_tpg
+
+# Org zsh overlays - contract defaults defined in bin/org-zsh.sh
+ORG_ZSH_DIR="${ORG_ZSH_DIR:-$HOME/.zsh_org.d}"
+ORG_ZSH_PREFIX="${ORG_ZSH_PREFIX:-.zsh_}"
+
+for org_zsh in "$ORG_ZSH_DIR"/${ORG_ZSH_PREFIX}*(N); do
+  source "$org_zsh"
+done
 
 # Initialize jenv (Java version manager) - dynamically manages java version
 if command -v jenv >/dev/null 2>&1; then

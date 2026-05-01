@@ -19,7 +19,9 @@ elif [ -x "$SCRIPT_DIR/scripts/godotenv.sh" ]; then
   "$SCRIPT_DIR/scripts/godotenv.sh"
 fi
 
-mkdir -p "$HOME"
-ln -sf "$SCRIPT_DIR/zsh/tpg.zsh" "$HOME/.zsh_tpg"
+# shellcheck source=../../bin/org-zsh.sh
+source "$SCRIPT_DIR/../../bin/org-zsh.sh"
+
+link_org_zsh "tpg" "$SCRIPT_DIR/zsh/tpg.zsh"
 
 echo "Organization bootstrap complete: tpg"

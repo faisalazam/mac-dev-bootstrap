@@ -4,6 +4,9 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
+# shellcheck source=./org-zsh.sh
+source "$SCRIPT_DIR/org-zsh.sh"
+
 echo "Bootstrapping dotfiles..."
 
 # -----------------------
@@ -57,6 +60,9 @@ echo "Configuring Zsh"
 ln -sf "$REPO_ROOT/zsh/zshrc" "$HOME/.zshrc"
 ln -sf "$REPO_ROOT/zsh/p10k.zsh" "$HOME/.p10k.zsh"
 ln -sf "$REPO_ROOT/zsh/zsh_aliases" "$HOME/.zsh_aliases"
+
+# Create org zsh overlay dir so zshrc glob runs cleanly even with no org installed
+mkdir -p "$(get_org_zsh_dir)"
 
 # -----------------------
 # SSH (config only)

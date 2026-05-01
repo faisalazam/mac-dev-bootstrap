@@ -49,7 +49,9 @@ Each overlay lives under `orgs/<org_name>/` and can include:
 - `setup.sh` for idempotent org setup
 - `Brewfile` for org-specific tools
 - `scripts/` for onboarding tasks (`certs.sh`, `vpn.sh`, etc.)
-- `zsh/tpg.zsh` for org-only shell exports (linked to `~/.zsh_tpg`)
+- `zsh/<org>.zsh` for org-only shell exports (linked to `${ORG_ZSH_DIR:-~/.zsh_org.d}/${ORG_ZSH_PREFIX:-.zsh_}<org>`)
+
+`zsh/zshrc` dynamically sources `${ORG_ZSH_DIR:-~/.zsh_org.d}/${ORG_ZSH_PREFIX:-.zsh_}*`, so multiple org overlays can coexist.
 
 This keeps the base setup generic while allowing per-company extensions.
 

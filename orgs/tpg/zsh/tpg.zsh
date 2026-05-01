@@ -1,5 +1,5 @@
 # TPG-specific shell environment.
-# Loaded from ~/.zsh_tpg by zsh/zshrc.
+# Loaded from ~/.zsh_org.d/.zsh_tpg by zsh/zshrc.
 
 if command -v brew >/dev/null 2>&1; then
   TPG_OPENSSL_PREFIX="$(brew --prefix openssl@3 2>/dev/null)"

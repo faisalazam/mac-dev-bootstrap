@@ -7,7 +7,7 @@ Organization-specific bootstrap overlay for TPG.
 - Applies optional TPG-only Homebrew packages from `Brewfile`
 - Installs Netskope CA cert into OpenSSL certs and refreshes hashes
 - Installs `godotenv` CLI from GitHub releases for macOS
-- Links TPG shell exports from `zsh/tpg.zsh` to `~/.zsh_tpg`
+- Links TPG shell exports from `zsh/tpg.zsh` to `${ORG_ZSH_DIR:-~/.zsh_org.d}/${ORG_ZSH_PREFIX:-.zsh_}tpg`
 
 ## Usage
 
