@@ -90,3 +90,37 @@ Recommended presets:
 - Tango Dark
 
 If colors look hard to read after setup, adjusting the iTerm2 color preset is usually sufficient.
+
+## `.gitattributes` template
+
+This repository includes a `.gitattributes` file under `git/gitattributes` as a **template**.
+
+It is **not used automatically** by Git. Instead, it is intended to be **copied into individual project repositories**
+as needed.
+
+The primary purpose of this template is to:
+
+- enforce LF (`\n`) line endings
+- avoid CRLF-related issues across macOS, Linux, Windows, and CI
+- ensure consistent behavior for shell scripts and test fixtures
+
+### Usage
+
+When setting up a new project repository, copy it to the repo root:
+
+```bash
+cp ~/mac-dev-bootstrap/git/gitattributes .gitattributes
+```
+
+Then commit it:
+
+```bash
+git add .gitattributes
+git commit -m "Add .gitattributes to normalize line endings"
+```
+
+#### Why this is not global
+
+Line-ending rules should be explicit and versioned per repository.
+Keeping .gitattributes local to each project avoids hidden global behavior
+and makes expectations clear to all contributors.
