@@ -62,7 +62,7 @@ ln -sf "$REPO_ROOT/zsh/p10k.zsh" "$HOME/.p10k.zsh"
 ln -sf "$REPO_ROOT/zsh/zsh_aliases" "$HOME/.zsh_aliases"
 
 # Create org zsh overlay dir so zshrc glob runs cleanly even with no org installed
-mkdir -p "$(get_org_zsh_dir)"
+mkdir -p "$ORG_ZSH_DIR"
 
 # -----------------------
 # SSH (config only)
