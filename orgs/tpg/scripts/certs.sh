@@ -9,7 +9,8 @@ if [ -z "$OPENSSL_PREFIX" ]; then
   exit 0
 fi
 
-TARGET_CERT_DIR="$OPENSSL_PREFIX/certs"
+OPENSSL_ETC="$(brew --prefix)/etc/openssl@3"
+TARGET_CERT_DIR="$OPENSSL_ETC/certs"
 TARGET_CERT_PATH="$TARGET_CERT_DIR/nscacert.pem"
 
 if [ ! -f "$NETSKOPE_CERT_SOURCE" ]; then
