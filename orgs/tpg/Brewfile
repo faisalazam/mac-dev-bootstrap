@@ -2,3 +2,5 @@
 # Add entries here as needed, for example:
 # brew "kubelogin"
 # cask "microsoft-teams"
+
+brew "awscli"

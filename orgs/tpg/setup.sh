@@ -9,6 +9,13 @@ if [ -f "$SCRIPT_DIR/Brewfile" ]; then
   brew bundle --file="$SCRIPT_DIR/Brewfile"
 fi
 
+if ! command -v aws >/dev/null 2>&1; then
+  echo "ERROR: aws CLI not found in PATH"
+  exit 1
+fi
+
+echo "AWS CLI found at: $(command -v aws)"
+
 if [ -x "$SCRIPT_DIR/scripts/certs.sh" ]; then
   "$SCRIPT_DIR/scripts/certs.sh"
 fi
